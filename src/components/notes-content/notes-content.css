@@ -5,6 +5,7 @@
 }
 .notes-container{
     position: relative;
+    margin-bottom: 200px;
 }
 .add-note-btn {
     position: absolute;

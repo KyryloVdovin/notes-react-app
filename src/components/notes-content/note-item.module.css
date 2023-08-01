@@ -2,7 +2,11 @@
     margin-bottom: 15px;
     border-radius: 5px;
     background-color: white;
-    animation: append-animate .6s linear;
+    /* animation: append-animate .6s linear; */
+}
+
+.noteItem input {
+    width: 90px;
 }
 
 .noteItem div {
@@ -13,6 +17,8 @@
     display: flex;
     justify-content: space-between;
 }
+
+.content {}
 
 .gap {
     gap: 15px;
@@ -37,12 +43,23 @@
 }
 
 .icon {
-    height: 100%;
+    /* height: 100%; */
+    display: flex;
     min-width: 39px;
     line-height: 39px;
     background-color: pink;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
+}
+
+.icon img {
+    height: 32px;
+    width: 32px;
+    margin: auto;
+}
+
+.buttons {
+    width: 130px;
 }
 
 .buttons div {
@@ -60,12 +77,13 @@
 }
 
 @keyframes append-animate {
-	from {
-		transform: scale(0);
-		opacity: 0;
-	}
-	to {
-		transform: scale(1);
-		opacity: 1;	
-	}
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
