@@ -74,19 +74,19 @@ export const summaryNotesCount = (item, properties) => {
     }
 
     switch (item.category) {
-        case 'Task':
+        case NoteCategories.Task:
             summaryItem.activeNotes = properties.taskActiveNotesCount;
             summaryItem.archivedNotes = properties.taskArchivedNotesCount;
             break;
-        case 'Idea':
+        case NoteCategories.Idea:
             summaryItem.activeNotes = properties.ideaActiveNotesCount;
             summaryItem.archivedNotes = properties.ideaArchivedNotesCount;
             break;
-        case 'Random thought':
+        case NoteCategories.RandomThought:
             summaryItem.activeNotes = properties.randomThoughtActiveNotesCount;
             summaryItem.archivedNotes = properties.randomThoughtArchivedNotesCount;
             break;
-        case 'Quote':
+        case NoteCategories.Quote:
             summaryItem.activeNotes = properties.quoteActiveNotesCount;
             summaryItem.archivedNotes = properties.quoteArchivedNotesCount;
             break;

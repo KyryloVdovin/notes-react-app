@@ -1,6 +1,5 @@
 import {countActiveElements, countArchivedElements, updateObjectInArray} from '../../utils/objects-helper';
 
-const GET_ALL_ACTIVE_NOTES = 'GET_ALL_ACTIVE_NOTES';
 const CREATE_NOTE = 'CREATE_NOTE';
 const SET_EDITING_MODE = 'SET_EDITING_MODE';
 const SAVE_EDITING_MODE = 'SAVE_EDITING_MODE';
@@ -71,7 +70,6 @@ const notesContentReducer = (state = initialState, action) => {
             let fullDate = `${month} ${day}, ${year}`;
 
             state.totalNotesCount++;
-            console.log(state.totalNotesCount);
 
             return {
                 ...state,

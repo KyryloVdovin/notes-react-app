@@ -7,38 +7,7 @@ import taskIcon from '../../img/task.png';
 import quoteIcon from '../../img/quote.png';
 import randomThoughtIcon from '../../img/random-thought.png';
 import { NoteCategories } from '../../utils/enumerators';
-
-interface SummaryItem {
-    taskActiveNotesCount: number,
-    taskArchivedNotesCount: number,
-    ideaActiveNotesCount: number,
-    ideaArchivedNotesCount: number,
-    quoteActiveNotesCount: number,
-    quoteArchivedNotesCount: number,
-    randomThoughtActiveNotesCount: number,
-    randomThoughtArchivedNotesCount: number,
-}
-interface SummaryTable {
-    activeNotes: number,
-    archivedNotes: number
-}
-interface Note extends SummaryItem {
-    id: number,
-    title: string,
-    created: string,
-    category: string,
-    content: string,
-    dates: string,
-    isEditingMode: boolean,
-    isSummaryItem: boolean,
-    summaryTable: SummaryTable,
-    setEditingMode: (noteId: number) => void,
-    leaveEditingMode: (noteId: number, textBody: string) => void,
-    changeNoteTexts: (noteId: number, property: string, textBody: string) => void
-    archiveNote: (noteId: number) => void,
-    countActiveNotes: () => void,
-    countArchivedNotes: () => void
-}
+import INote from '../../utils/main-notes-content-interfaces/INote';
 
 const icons = [
     { category: "Task", icon: taskIcon },
@@ -48,7 +17,7 @@ const icons = [
 ]
 
 const NoteItem = ({ id, title, created, category, content, dates, isEditingMode, isSummaryItem, summaryTable, setEditingMode,
-    leaveEditingMode, changeNoteTexts, archiveNote, countActiveNotes, countArchivedNotes }: Note) => {
+    leaveEditingMode, changeNoteTexts, archiveNote, countActiveNotes, countArchivedNotes }: INote) => {
     const switchOnEditingMode = (noteId: number) => {
         setEditingMode(noteId);
     }

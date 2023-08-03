@@ -1,30 +1,9 @@
 import { connect } from "react-redux"
 import NotesContent from "./notes-content";
 import { createNote, setEditingMode, leaveEditingMode, changeNoteTexts, archiveNote, countActiveNotes, countArchivedNotes } from '../redux/notes-content-reducer';
+import {IRootState} from '../../utils/main-notes-content-interfaces/IRootState';
 
-interface RootState {
-    notesContent: {
-        activeNotes: [],
-        archivedNotes: [],
-        summaryNotes: [],
-        taskActiveNotesCount: number,
-        taskArchivedNotesCount: number,
-        ideaActiveNotesCount: number,
-        ideaArchivedNotesCount: number,
-        quoteActiveNotesCount: number,
-        quoteArchivedNotesCount: number,
-        randomThoughtActiveNotesCount: number,
-        randomThoughtArchivedNotesCount: number,
-        setEditingMode: (noteId: number) => void,
-        leaveEditingMode: (noteId: number, textBody: string) => void
-        changeNoteTexts: (noteId: number, property: string, textBody: string) => void,
-        archiveNote: (noteId: number) => void
-        countActiveNotes: () => void,
-        countArchivedNotes: () => void
-    }
-}
-
-const mapDispatchToProps = (state: RootState) => {
+const mapDispatchToProps = (state: IRootState) => {
     console.log(state.notesContent.activeNotes);
     console.log(state.notesContent.archivedNotes);
     return {
