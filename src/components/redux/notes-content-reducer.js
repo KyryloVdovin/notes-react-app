@@ -1,10 +1,12 @@
-import {countActiveElements, countArchivedElements, updateObjectInArray} from '../../utils/objects-helper';
+import { countActiveElements, countArchivedElements, updateObjectInArray } from '../../utils/objects-helper';
+import { NoteCategories } from '../../utils/enumerators';
 
 const CREATE_NOTE = 'CREATE_NOTE';
 const SET_EDITING_MODE = 'SET_EDITING_MODE';
 const SAVE_EDITING_MODE = 'SAVE_EDITING_MODE';
 const CHANGE_NOTE_TEXT = 'CHANGE_NOTE_TEXT';
 const ARCHIVE_NOTE = 'ARCHIVE_NOTE';
+const UNARCHIVE_NOTE = 'UNARCHIVE_NOTE';
 const COUNT_ACTIVE_NOTES = 'COUNT_ACTIVE_NOTES';
 const COUNT_ARCHIVED_NOTES = 'COUNT_ARCHIVED_NOTES';
 
@@ -29,10 +31,10 @@ const initialState = {
     ],
     archivedNotes: [],
     summaryNotes: [
-        { id: 0, category: 'Idea', activeNotes: 0, archivedNotes: 0, isSummaryItem: true },
-        { id: 1, category: 'Task', activeNotes: 0, archivedNotes: 0, isSummaryItem: true },
-        { id: 2, category: 'Quote', activeNotes: 0, archivedNotes: 0, isSummaryItem: true },
-        { id: 3, category: 'Random thought', activeNotes: 0, archivedNotes: 0, isSummaryItem: true },
+        { id: 0, category: NoteCategories.Idea, activeNotes: 0, archivedNotes: 0, isSummaryItem: true },
+        { id: 1, category: NoteCategories.Task, activeNotes: 0, archivedNotes: 0, isSummaryItem: true },
+        { id: 2, category: NoteCategories.Quote, activeNotes: 0, archivedNotes: 0, isSummaryItem: true },
+        { id: 3, category: NoteCategories.RandomThought, activeNotes: 0, archivedNotes: 0, isSummaryItem: true },
     ],
     totalNotesCount: 4,
     taskActiveNotesCount: 1,
@@ -95,10 +97,18 @@ const notesContentReducer = (state = initialState, action) => {
                 activeNotes: updateObjectInArray(state.activeNotes, action.noteId, { [`${action.property}`]: action.textBody })
             }
         case ARCHIVE_NOTE:
+            const archivedItem = state.activeNotes.find(item => item.id === action.noteId);
             return {
                 ...state,
-                archivedNotes: [...state.archivedNotes, state.activeNotes.find(item => item.id === action.noteId)],
+                archivedNotes: [...state.archivedNotes, { ...archivedItem, isArchived: true }],
                 activeNotes: state.activeNotes.filter(item => item.id !== action.noteId)
+            }
+        case UNARCHIVE_NOTE:
+            const unarchivedItem = state.archivedNotes.find(item => item.id === action.noteId);
+            return {
+                ...state,
+                activeNotes: [...state.activeNotes, { ...unarchivedItem, isArchived: false }],
+                archivedNotes: state.archivedNotes.filter(item => item.id !== action.noteId)
             }
         case COUNT_ACTIVE_NOTES:
             countActiveElements(state);
@@ -148,6 +158,12 @@ export const leaveEditingMode = (noteId, textBody) => {
 export const archiveNote = (noteId) => {
     return {
         type: ARCHIVE_NOTE,
+        noteId
+    }
+};
+export const unarchiveNote = (noteId) => {
+    return {
+        type: UNARCHIVE_NOTE,
         noteId
     }
 };

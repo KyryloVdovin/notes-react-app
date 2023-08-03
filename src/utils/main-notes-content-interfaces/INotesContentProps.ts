@@ -1,6 +1,7 @@
 import INote from './INote';
+import ISummaryTablePopup from './ISummaryTablePopup';
 
-export default interface NotesContentProps {
+export default interface NotesContentProps extends ISummaryTablePopup{
     activeNotes: INote[],
     summaryNotes: INote[],
     taskActiveNotesCount: number,
@@ -17,5 +18,6 @@ export default interface NotesContentProps {
     changeNoteTexts: (noteId: number, property: string, textBody: string) => void
     archiveNote: (noteId: number) => void,
     countActiveNotes: () => void,
-    countArchivedNotes: () => void
+    countArchivedNotes: () => void,
+    selectSummaryCategory: (category: string) => void,
 }

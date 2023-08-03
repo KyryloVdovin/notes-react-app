@@ -16,8 +16,10 @@ const icons = [
     { category: "Quote", icon: quoteIcon }
 ]
 
-const NoteItem = ({ id, title, created, category, content, dates, isEditingMode, isSummaryItem, summaryTable, setEditingMode,
-    leaveEditingMode, changeNoteTexts, archiveNote, countActiveNotes, countArchivedNotes }: INote) => {
+const NoteItem = ({ id, title, created, category, content, dates, isEditingMode, isSummaryItem, isArchived, summaryTable,
+    setEditingMode, leaveEditingMode, changeNoteTexts, archiveNote, countActiveNotes, countArchivedNotes, openSummaryTable,
+    unarchiveNote, selectSummaryCategory }: INote) => {
+
     const switchOnEditingMode = (noteId: number) => {
         setEditingMode(noteId);
     }
@@ -33,10 +35,19 @@ const NoteItem = ({ id, title, created, category, content, dates, isEditingMode,
         countArchivedNotes();
         countActiveNotes();
     }
+    const restoreNote = (noteId: number) => {
+        unarchiveNote(noteId);
+        countArchivedNotes();
+        countActiveNotes();
+    }
+    const openSummaryTablePopup = (isOpen: boolean, category: string) => {
+        selectSummaryCategory(category);
+        openSummaryTable(isOpen);
+    }
     const item = icons.find(icon => icon.category === category)
 
     return (
-        <div className={``}>
+        <div onClick={() => isSummaryItem ? openSummaryTablePopup(true, category) : undefined}>
             {!isEditingMode && <div className={`${s.noteItem} ${s.flex}`}>
                 <div className={`${s.padding} ${s.icon}`}>
                     <img src={item?.icon} />
@@ -50,14 +61,15 @@ const NoteItem = ({ id, title, created, category, content, dates, isEditingMode,
                     {!isSummaryItem && <div>{content}</div>}
                     {!isSummaryItem && <div>{dates}</div>}
                 </div>
-                {!isSummaryItem && <div className={`${s.buttons} ${s.flex} ${s.gap} ${s.padding}`}>
-                    <div className={`${s.editBtn}`} onClick={() => { switchOnEditingMode(id) }}>
+                <div className={`${s.buttons} ${s.flex} ${s.gap} ${s.padding}`}>
+                    {!isSummaryItem && !isArchived && <div className={`${s.editBtn}`} onClick={() => { switchOnEditingMode(id) }}>
                         <img src={editIcon} />
-                    </div>
-                    <div className={`${s.deleteBtn}`} onClick={() => { removeNote(id) }}>
+                    </div>}
+                    {!isSummaryItem && <div className={`${s.deleteBtn}`} onClick={() =>
+                        !isArchived ? removeNote(id) : restoreNote(id)}>
                         <img src={deleteIcon} />
-                    </div>
-                </div>}
+                    </div>}
+                </div>
             </div>}
             {isEditingMode && <div className={`${s.noteItem} ${s.flex}`}>
                 <div className={`${s.padding} ${s.icon}`}>

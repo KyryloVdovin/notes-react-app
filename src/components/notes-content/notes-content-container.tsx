@@ -1,11 +1,13 @@
 import { connect } from "react-redux"
 import NotesContent from "./notes-content";
-import { createNote, setEditingMode, leaveEditingMode, changeNoteTexts, archiveNote, countActiveNotes, countArchivedNotes } from '../redux/notes-content-reducer';
-import {IRootState} from '../../utils/main-notes-content-interfaces/IRootState';
+import {
+    createNote, setEditingMode, leaveEditingMode, changeNoteTexts, archiveNote, countActiveNotes,
+    countArchivedNotes
+} from '../redux/notes-content-reducer';
+import { IRootState } from '../../utils/main-notes-content-interfaces/IRootState';
+import { openSummaryTable, selectSummaryCategory } from '../redux/summary-table-reducer';
 
-const mapDispatchToProps = (state: IRootState) => {
-    console.log(state.notesContent.activeNotes);
-    console.log(state.notesContent.archivedNotes);
+const mapStateToProps = (state: IRootState) => {
     return {
         activeNotes: state.notesContent.activeNotes,
         taskActiveNotesCount: state.notesContent.taskActiveNotesCount,
@@ -20,9 +22,9 @@ const mapDispatchToProps = (state: IRootState) => {
     }
 }
 
-const NotesContentContainer = connect(mapDispatchToProps, {
-    createNote, setEditingMode, leaveEditingMode, changeNoteTexts,
-    archiveNote, countActiveNotes, countArchivedNotes
+const NotesContentContainer = connect(mapStateToProps, {
+    createNote, setEditingMode, leaveEditingMode, changeNoteTexts, archiveNote,
+    countActiveNotes, countArchivedNotes, openSummaryTable, selectSummaryCategory
 })(NotesContent);
 
 export default NotesContentContainer;

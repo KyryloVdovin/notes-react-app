@@ -1,7 +1,8 @@
-.header p{
+.header p {
     text-align: left;
 }
-.header .bottom-border{
+
+.header .bottom-border {
     height: 2px;
     background-color: rgb(209, 209, 209);
 }

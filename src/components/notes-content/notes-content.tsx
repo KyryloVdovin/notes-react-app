@@ -6,8 +6,8 @@ import NoteItem from "./note-item";
 const NotesContent = ({ activeNotes, summaryNotes, taskActiveNotesCount, taskArchivedNotesCount, ideaActiveNotesCount,
     ideaArchivedNotesCount, quoteActiveNotesCount, quoteArchivedNotesCount, randomThoughtActiveNotesCount,
     randomThoughtArchivedNotesCount, createNote, setEditingMode, leaveEditingMode, changeNoteTexts, archiveNote,
-    countActiveNotes, countArchivedNotes }: INotesContentProps) => {
-        
+    countActiveNotes, countArchivedNotes, openSummaryTable, selectSummaryCategory }: INotesContentProps) => {
+
     const noteList = activeNotes.map(item => {
         return <NoteItem key={item.id} {...item} setEditingMode={setEditingMode} leaveEditingMode={leaveEditingMode}
             changeNoteTexts={changeNoteTexts} archiveNote={archiveNote} countActiveNotes={countActiveNotes}
@@ -21,7 +21,8 @@ const NotesContent = ({ activeNotes, summaryNotes, taskActiveNotesCount, taskArc
     }
     const summaryList = summaryNotes.map(item => {
         const summaryTable = summaryNotesCount(item, properties);
-        return <NoteItem key={item.id} {...item} summaryTable={summaryTable} />
+        return <NoteItem key={item.id} {...item} summaryTable={summaryTable} openSummaryTable={openSummaryTable} 
+        selectSummaryCategory={selectSummaryCategory}/>
     });
 
     const createNewNote = () => {
