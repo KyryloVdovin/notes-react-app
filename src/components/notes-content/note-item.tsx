@@ -6,8 +6,23 @@ import ideaIcon from '../../img/idea.png';
 import taskIcon from '../../img/task.png';
 import quoteIcon from '../../img/quote.png';
 import randomThoughtIcon from '../../img/random-thought.png';
+import { NoteCategories } from '../../utils/enumerators';
 
-interface Note {
+interface SummaryItem {
+    taskActiveNotesCount: number,
+    taskArchivedNotesCount: number,
+    ideaActiveNotesCount: number,
+    ideaArchivedNotesCount: number,
+    quoteActiveNotesCount: number,
+    quoteArchivedNotesCount: number,
+    randomThoughtActiveNotesCount: number,
+    randomThoughtArchivedNotesCount: number,
+}
+interface SummaryTable {
+    activeNotes: number,
+    archivedNotes: number
+}
+interface Note extends SummaryItem {
     id: number,
     title: string,
     created: string,
@@ -15,17 +30,14 @@ interface Note {
     content: string,
     dates: string,
     isEditingMode: boolean,
+    isSummaryItem: boolean,
+    summaryTable: SummaryTable,
     setEditingMode: (noteId: number) => void,
     leaveEditingMode: (noteId: number, textBody: string) => void,
     changeNoteTexts: (noteId: number, property: string, textBody: string) => void
-    archiveNote: (noteId: number) => void
-}
-
-enum NoteCategories {
-    Task = 'Task',
-    Idea = 'Idea',
-    RandomThought = 'Random thought',
-    Quote = 'Quote'
+    archiveNote: (noteId: number) => void,
+    countActiveNotes: () => void,
+    countArchivedNotes: () => void
 }
 
 const icons = [
@@ -35,19 +47,22 @@ const icons = [
     { category: "Quote", icon: quoteIcon }
 ]
 
-const NoteItem = ({ id, title, created, category, content, dates, isEditingMode, setEditingMode,
-    leaveEditingMode, changeNoteTexts, archiveNote }: Note) => {
+const NoteItem = ({ id, title, created, category, content, dates, isEditingMode, isSummaryItem, summaryTable, setEditingMode,
+    leaveEditingMode, changeNoteTexts, archiveNote, countActiveNotes, countArchivedNotes }: Note) => {
     const switchOnEditingMode = (noteId: number) => {
         setEditingMode(noteId);
     }
     const switchOffEditingMode = (noteId: number, textBody: string) => {
         leaveEditingMode(noteId, textBody);
+        countActiveNotes();
     }
     const onNoteTextsChanged = (noteId: number, property: string, e: any) => {
         changeNoteTexts(noteId, property, e.target.value);
     }
     const removeNote = (noteId: number) => {
         archiveNote(noteId);
+        countArchivedNotes();
+        countActiveNotes();
     }
     const item = icons.find(icon => icon.category === category)
 
@@ -58,20 +73,22 @@ const NoteItem = ({ id, title, created, category, content, dates, isEditingMode,
                     <img src={item?.icon} />
                 </div>
                 <div className={`${s.padding} ${s.content} ${s.flex} ${s.gap}`}>
-                    <div>{title}</div>
-                    <div>{created}</div>
+                    {!isSummaryItem && <div>{title}</div>}
+                    {!isSummaryItem && <div>{created}</div>}
                     <div>{category}</div>
-                    <div>{content}</div>
-                    <div>{dates}</div>
+                    {isSummaryItem && <div>{summaryTable.activeNotes}</div>}
+                    {isSummaryItem && <div>{summaryTable.archivedNotes}</div>}
+                    {!isSummaryItem && <div>{content}</div>}
+                    {!isSummaryItem && <div>{dates}</div>}
                 </div>
-                <div className={`${s.buttons} ${s.flex} ${s.gap} ${s.padding}`}>
+                {!isSummaryItem && <div className={`${s.buttons} ${s.flex} ${s.gap} ${s.padding}`}>
                     <div className={`${s.editBtn}`} onClick={() => { switchOnEditingMode(id) }}>
                         <img src={editIcon} />
                     </div>
                     <div className={`${s.deleteBtn}`} onClick={() => { removeNote(id) }}>
                         <img src={deleteIcon} />
                     </div>
-                </div>
+                </div>}
             </div>}
             {isEditingMode && <div className={`${s.noteItem} ${s.flex}`}>
                 <div className={`${s.padding} ${s.icon}`}>
