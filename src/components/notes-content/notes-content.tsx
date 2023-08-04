@@ -21,8 +21,8 @@ const NotesContent = ({ activeNotes, summaryNotes, taskActiveNotesCount, taskArc
     }
     const summaryList = summaryNotes.map(item => {
         const summaryTable = summaryNotesCount(item, properties);
-        return <NoteItem key={item.id} {...item} summaryTable={summaryTable} openSummaryTable={openSummaryTable} 
-        selectSummaryCategory={selectSummaryCategory}/>
+        return <NoteItem key={item.id} {...item} summaryTable={summaryTable} openSummaryTable={openSummaryTable}
+            selectSummaryCategory={selectSummaryCategory} />
     });
 
     const createNewNote = () => {
@@ -34,11 +34,23 @@ const NotesContent = ({ activeNotes, summaryNotes, taskActiveNotesCount, taskArc
         <div>
             <div className="notes-container">
                 <div className="notes-list">
+                    <div className='column-titles'>
+                        <div>Name</div>
+                        <div>Created</div>
+                        <div>Category</div>
+                        <div>Content</div>
+                        <div>Dates</div>
+                    </div>
                     {noteList}
                 </div>
                 <button onClick={createNewNote} className="add-note-btn">add note</button>
             </div>
             <div className="notes-list">
+                <div className='summary-column-titles'>
+                    <div>Category</div>
+                    <div>Active</div>
+                    <div>Archived</div>
+                </div>
                 {summaryList}
             </div>
         </div>

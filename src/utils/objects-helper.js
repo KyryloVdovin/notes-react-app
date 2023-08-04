@@ -94,3 +94,9 @@ export const summaryNotesCount = (item, properties) => {
 
     return summaryItem;
 }
+
+export const dateParser = (text) => {
+    var pattern = /\d{2,4}[-/.]\d{1,2}[-/.]\d{1,4}/gi;
+    const parsedDate = text.match(pattern);
+    return parsedDate;
+}

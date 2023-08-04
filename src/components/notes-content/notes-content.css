@@ -7,6 +7,26 @@
     position: relative;
     margin-bottom: 200px;
 }
+.column-titles{
+    margin: 0 130px 10px 90px;
+    display: flex;
+    justify-content: space-between;
+}
+.summary-column-titles{
+    margin: 0 150px 10px 90px;
+    display: flex;
+    justify-content: space-between;
+}
+.column-titles div{
+    width: 90px;
+    text-align: left;
+    font-weight: 600;
+}
+.summary-column-titles div{
+    width: 100px;
+    text-align: left;
+    font-weight: 600;
+}
 .add-note-btn {
     position: absolute;
     left: 0;

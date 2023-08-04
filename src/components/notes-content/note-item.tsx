@@ -47,7 +47,7 @@ const NoteItem = ({ id, title, created, category, content, dates, isEditingMode,
     const item = icons.find(icon => icon.category === category)
 
     return (
-        <div onClick={() => isSummaryItem ? openSummaryTablePopup(true, category) : undefined}>
+        <div className={`${isSummaryItem && s.clickable}`} onClick={() => isSummaryItem ? openSummaryTablePopup(true, category) : undefined}>
             {!isEditingMode && <div className={`${s.noteItem} ${s.flex}`}>
                 <div className={`${s.padding} ${s.icon}`}>
                     <img src={item?.icon} />
@@ -77,7 +77,7 @@ const NoteItem = ({ id, title, created, category, content, dates, isEditingMode,
                 </div>
                 <div className={`${s.padding} ${s.content} ${s.flex} ${s.gap}`}>
                     <input type='text' value={title} onChange={(e) => { onNoteTextsChanged(id, 'title', e) }} />
-                    <div>{created}</div>
+                    <input type='text' value={created} readOnly={true}/>
                     <select value={category} onChange={(e) => { onNoteTextsChanged(id, 'category', e) }}>
                         <option value={NoteCategories.Idea} label={NoteCategories.Idea} />
                         <option value={NoteCategories.Quote} label={NoteCategories.Quote} />
@@ -85,10 +85,10 @@ const NoteItem = ({ id, title, created, category, content, dates, isEditingMode,
                         <option value={NoteCategories.Task} label={NoteCategories.Task} />
                     </select>
                     <input type='text' value={content} onChange={(e) => { onNoteTextsChanged(id, 'content', e) }} />
-                    <div>{dates}</div>
+                    <input type='text' value={dates} readOnly={true}/>
                 </div>
                 <div className={`${s.buttons} ${s.flex} ${s.gap} ${s.padding}`}>
-                    <div className={`${s.editBtn}`} onClick={() => { switchOffEditingMode(id, title) }}>
+                    <div className={`${s.editBtn}`} onClick={() => { switchOffEditingMode(id, content) }}>
                         <img src={saveIcon} />
                     </div>
                 </div>

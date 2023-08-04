@@ -1,5 +1,7 @@
 .header p {
     text-align: left;
+    font-weight: 600;
+    font-size: 24px;
 }
 
 .header .bottom-border {

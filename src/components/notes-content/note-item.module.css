@@ -12,6 +12,9 @@
 .noteItem div {
     line-height: 39px;
 }
+.clickable{
+    cursor: pointer;
+}
 
 .flex {
     display: flex;

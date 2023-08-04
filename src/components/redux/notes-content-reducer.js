@@ -1,4 +1,4 @@
-import { countActiveElements, countArchivedElements, updateObjectInArray } from '../../utils/objects-helper';
+import { countActiveElements, countArchivedElements, updateObjectInArray, dateParser } from '../../utils/objects-helper';
 import { NoteCategories } from '../../utils/enumerators';
 
 const CREATE_NOTE = 'CREATE_NOTE';
@@ -13,20 +13,32 @@ const COUNT_ARCHIVED_NOTES = 'COUNT_ARCHIVED_NOTES';
 const initialState = {
     activeNotes: [
         {
-            id: 0, title: 'go shopping', created: 'July 30, 2023', category: 'Idea', content: 'text',
-            dates: '11/11/2023', isEditingMode: false, isArchived: false, isSummaryItem: false
+            id: 0, title: 'go shopping', created: 'July 30, 2023', category: NoteCategories.Idea.toString(), content: 'text',
+            dates: '', isEditingMode: false, isArchived: false, isSummaryItem: false
         },
         {
-            id: 1, title: 'visit friends', created: 'July 30, 2023', category: 'Task', content: 'text',
-            dates: '11/11/2023', isEditingMode: false, isArchived: false, isSummaryItem: false
+            id: 1, title: 'visit friends', created: 'July 30, 2023', category: NoteCategories.Task.toString(), content: 'text',
+            dates: '', isEditingMode: false, isArchived: false, isSummaryItem: false
         },
         {
-            id: 2, title: 'get driving licens', created: 'July 30, 2023', category: 'Quote', content: 'text',
-            dates: '11/11/2023', isEditingMode: false, isArchived: false, isSummaryItem: false
+            id: 2, title: 'get driving licens', created: 'July 30, 2023', category: NoteCategories.Quote.toString(), content: 'text',
+            dates: '', isEditingMode: false, isArchived: false, isSummaryItem: false
         },
         {
-            id: 3, title: 'camp', created: 'July 30, 2023', category: 'Random thought', content: 'text',
-            dates: '11/11/2023', isEditingMode: false, isArchived: false, isSummaryItem: false
+            id: 3, title: 'camp', created: 'July 30, 2023', category: NoteCategories.RandomThought.toString(), content: 'text',
+            dates: '', isEditingMode: false, isArchived: false, isSummaryItem: false
+        },
+        {
+            id: 4, title: 'fire show', created: 'July 30, 2023', category: NoteCategories.Task.toString(), content: 'text',
+            dates: '', isEditingMode: false, isArchived: false, isSummaryItem: false
+        },
+        {
+            id: 5, title: 'walking', created: 'July 30, 2023', category: NoteCategories.Quote.toString(), content: 'text',
+            dates: '', isEditingMode: false, isArchived: false, isSummaryItem: false
+        },
+        {
+            id: 6, title: 'weekand', created: 'July 30, 2023', category: NoteCategories.RandomThought.toString(), content: 'text',
+            dates: '', isEditingMode: false, isArchived: false, isSummaryItem: false
         },
     ],
     archivedNotes: [],
@@ -36,14 +48,14 @@ const initialState = {
         { id: 2, category: NoteCategories.Quote, activeNotes: 0, archivedNotes: 0, isSummaryItem: true },
         { id: 3, category: NoteCategories.RandomThought, activeNotes: 0, archivedNotes: 0, isSummaryItem: true },
     ],
-    totalNotesCount: 4,
-    taskActiveNotesCount: 1,
+    totalNotesCount: 7,
+    taskActiveNotesCount: 2,
     taskArchivedNotesCount: 0,
     ideaActiveNotesCount: 1,
     ideaArchivedNotesCount: 0,
-    quoteActiveNotesCount: 1,
+    quoteActiveNotesCount: 2,
     quoteArchivedNotesCount: 0,
-    randomThoughtActiveNotesCount: 1,
+    randomThoughtActiveNotesCount: 2,
     randomThoughtArchivedNotesCount: 0,
 }
 
@@ -77,8 +89,8 @@ const notesContentReducer = (state = initialState, action) => {
                 ...state,
                 activeNotes: [...state.activeNotes,
                 {
-                    id: state.totalNotesCount - 1, title: 'new note', created: fullDate, category: 'Idea', content: 'text',
-                    dates: '11/11/2023', isArchived: false, isEditingMode: false, isSummaryItem: false
+                    id: state.totalNotesCount - 1, title: 'new note', created: fullDate, category: NoteCategories.RandomThought.toString(), content: 'text',
+                    dates: '', isArchived: false, isEditingMode: false, isSummaryItem: false
                 }]
             }
         case SET_EDITING_MODE:
@@ -87,9 +99,11 @@ const notesContentReducer = (state = initialState, action) => {
                 activeNotes: updateObjectInArray(state.activeNotes, action.noteId, { isEditingMode: true })
             }
         case SAVE_EDITING_MODE:
+            const parsedDate = dateParser(action.textBody);
+
             return {
                 ...state,
-                activeNotes: updateObjectInArray(state.activeNotes, action.noteId, { isEditingMode: false, title: action.textBody })
+                activeNotes: updateObjectInArray(state.activeNotes, action.noteId, { isEditingMode: false, dates: parsedDate })
             }
         case CHANGE_NOTE_TEXT:
             return {
