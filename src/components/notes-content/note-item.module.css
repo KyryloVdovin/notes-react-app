@@ -1,0 +1,89 @@
+.noteItem {
+    margin-bottom: 15px;
+    border-radius: 5px;
+    background-color: white;
+    /* animation: append-animate .6s linear; */
+}
+
+.noteItem input {
+    width: 90px;
+}
+
+.noteItem div {
+    line-height: 39px;
+}
+.clickable{
+    cursor: pointer;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.gap {
+    gap: 15px;
+}
+
+.padding {
+    padding: 10px;
+}
+
+.content {
+    margin-left: 20px;
+    width: 100%;
+    text-align: center;
+}
+
+.content div {
+    width: 90px;
+    text-align: left;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.icon {
+    display: flex;
+    min-width: 39px;
+    line-height: 39px;
+    background-color: pink;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.icon img {
+    height: 32px;
+    width: 32px;
+    margin: auto;
+}
+
+.buttons {
+    width: 130px;
+}
+
+.buttons div {
+    border: 2px solid pink;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    margin: auto 0;
+    cursor: pointer;
+}
+
+.buttons img {
+    width: 60%;
+    height: inherit;
+}
+
+@keyframes append-animate {
+    from {
+        transform: scale(0);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}

@@ -1,0 +1,10 @@
+.header p {
+    text-align: left;
+    font-weight: 600;
+    font-size: 24px;
+}
+
+.header .bottom-border {
+    height: 2px;
+    background-color: rgb(209, 209, 209);
+}
